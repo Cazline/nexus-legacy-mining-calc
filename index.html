@@ -32,7 +32,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace, sans-serif;
       font-size: 14px;
       padding: 12px;
-      padding-bottom: 30px;
+      padding-bottom: 40px;
       max-width: 480px;
       margin: 0 auto;
     }
@@ -87,6 +87,7 @@
       font-weight: 600;
       cursor: pointer;
       text-align: center;
+      touch-action: manipulation;
     }
 
     .btn-field.active {
@@ -114,6 +115,7 @@
       text-align: center;
       text-transform: uppercase;
       color: var(--text);
+      touch-action: manipulation;
     }
 
     .btn-zone.zone-sentinel.active { border-color: var(--green); color: var(--green); background: #0e2716; }
@@ -210,7 +212,7 @@
     }
 
     .settings-panel.open {
-      display: block;
+      display: block !important;
     }
 
     .cfg-row {
@@ -236,11 +238,11 @@
 
   <header>
     <h1>Nexus Fleet Radar</h1>
-    <button id="toggleCfg" type="button" class="btn-toggle-cfg">⚙ Settings</button>
+    <button id="toggleCfg" type="button" class="btn-toggle-cfg" onclick="toggleSettings()">⚙ Settings</button>
   </header>
 
   <div class="section-title">Field Type</div>
-  <div class="field-grid">
+  <div class="field-grid" id="fieldGrid">
     <button type="button" class="btn-field active" onclick="setField('ORE BELT', this)">Ore Belt (50k)</button>
     <button type="button" class="btn-field" onclick="setField('GAS CLOUD', this)">Gas Cloud (30k)</button>
     <button type="button" class="btn-field" onclick="setField('ICE FIELD', this)">Ice Field (8k)</button>
@@ -250,7 +252,7 @@
   </div>
 
   <div class="section-title">Security Zone</div>
-  <div class="zone-row">
+  <div class="zone-row" id="zoneGrid">
     <button type="button" class="btn-zone zone-sentinel" onclick="setZone('SENTINEL', this)">Sentinel</button>
     <button type="button" class="btn-zone zone-open active" onclick="setZone('OPEN', this)">Open</button>
     <button type="button" class="btn-zone zone-dead" onclick="setZone('DEAD', this)">Dead</button>
@@ -259,19 +261,19 @@
 
   <div class="input-grid">
     <div class="input-box">
-      <label>Richness (Mult)</label>
+      <label for="inRichness">Richness (Mult)</label>
       <input type="number" id="inRichness" value="1.0" step="0.01" inputmode="decimal">
     </div>
     <div class="input-box">
-      <label>Remaining %</label>
+      <label for="inLeftPct">Remaining %</label>
       <input type="number" id="inLeftPct" value="100" min="1" max="100" inputmode="numeric">
     </div>
   </div>
 
   <div class="input-box" style="margin-bottom: 12px;">
-    <label>Escort Class</label>
+    <label for="selEscortShip">Escort Class</label>
     <select id="selEscortShip">
       <option value="Cruiser">Cruiser (1.0x)</option>
       <option value="Interceptor">Interceptor (3.0x)</option>
       <option value="Fighter">Fighter (5.0x)</option>
-      <option value="Corvette">Corvette (2.
+      <option value="Corvette">Corvette (2.0x)</
