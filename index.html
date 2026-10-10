@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0d1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Nexus Mining Calc</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --orange: #f0883e;
+      --red: #f85149;
+      --purple: #bc8cff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace, sans-serif;
+      font-size: 14px;
+      padding: 12px;
+      padding-bottom: 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: 16px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-toggle-cfg {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #8b949e;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    /* Grid selector buttons for fields */
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .btn-field {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-field.active {
+      border-color: var(--accent);
+      background: #1f2937;
+      color: var(--text-bright);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    /* Zone Selector Chips */
+    .zone-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .btn-zone {
+      flex: 1;
+      padding: 8px 4px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .btn-zone[data-zone="SENTINEL"].active { border-color: var(--green); color: var(--green); background: #0e2716; }
+    .btn-zone[data-zone="OPEN"].active     { border-color: var(--orange); color: var(--orange); background: #2c1a0e; }
+    .btn-zone[data-zone="DEAD"].active     { border-color: var(--red); color: var(--red); background: #2f1214; }
+    .btn-zone[data-zone="RIFT"].active     { border-color: var(--purple); color: var(--purple); background: #241438; }
+
+    /* Inputs Row */
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .input-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .input-box label {
+      display: block;
+      font-size: 10px;
+      color: #8b949e;
+      margin-bottom: 4px;
+    }
+
+    .input-box input, .input-box select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-bright);
+      font-size: 16px;
+      font-weight: 600;
+      outline: none;
+      font-family: inherit;
+    }
+
+    /* Results Card */
+    .results-card {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .ship-output-box {
+      margin-top: 10px;
+      padding: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .miner-total {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .escort-total {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    .dwell-badge {
+      margin-top: 10px;
+      padding: 6px 8px;
+      background: #0b132b;
+      border: 1px solid #1c2541;
+      border-radius: 4px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      display: none;
+    }
+
+    .settings-panel.open {
+      display: block;
+    }
+
+    .cfg-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .cfg-row input, .cfg-row select {
+      width: 110px;
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--text-bright);
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Nexus Fleet Radar</h1>
+    <button id="toggleCfg" class="btn-toggle-cfg">⚙ Settings</button>
+  </header>
+
+  <div class="section-title">Field Type</div>
+  <div class="field-grid">
+    <button class="btn-field active" data-field="ORE BELT">Ore Belt (50k)</button>
+    <button class="btn-field" data-field="GAS CLOUD">Gas Cloud (30k)</button>
+    <button class="btn-field" data-field="ICE FIELD">Ice Field (8k)</button>
+    <button class="btn-field" data-field="PLASMA NEBULA">Plasma Nebula (8k)</button>
+    <button class="btn-field" data-field="QUANTUM CLUSTER">Quantum Cluster (5k)</button>
+    <button class="btn-field" data-field="DARK MATTER RIFT">Dark Matter (2.5k)</button>
+  </div>
+
+  <div class="section-title">Security Zone</div>
+  <div class="zone-row">
+    <button class="btn-zone" data-zone="SENTINEL">Sentinel</button>
+    <button class="btn-zone active" data-zone="OPEN">Open</button>
