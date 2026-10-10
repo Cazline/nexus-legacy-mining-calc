@@ -4,18 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0d1117">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Nexus Mining Calc</title>
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Nexus Mining Radar</title>
   <style>
     :root {
       --bg: #0d1117;
       --card-bg: #161b22;
+      --input-bg: #21262d;
       --border: #30363d;
       --text: #c9d1d9;
       --text-bright: #f0f6fc;
-      --accent: #58a6ff;
+      --blue: #58a6ff;
       --green: #3fb950;
       --orange: #f0883e;
+      --gold: #d29922;
       --red: #f85149;
       --purple: #bc8cff;
     }
@@ -24,256 +26,195 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace, sans-serif;
-      font-size: 14px;
-      padding: 12px;
-      padding-bottom: 40px;
-      max-width: 480px;
+      font-size: 13px;
+      padding: 10px;
+      max-width: 440px;
       margin: 0 auto;
+      min-height: 100vh;
     }
 
-    header {
+    /* Header Bar */
+    .app-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 12px;
-    }
-
-    header h1 {
-      font-size: 16px;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .btn-toggle-cfg {
+      padding: 8px 12px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .app-header h1 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.3px;
+    }
+    .btn-gear {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 8px;
+      border-radius: 4px;
       cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
     }
 
-    .section-title {
-      font-size: 11px;
+    /* Section Headers */
+    .label-tag {
+      font-size: 10px;
+      font-weight: 700;
       text-transform: uppercase;
       color: #8b949e;
-      font-weight: 600;
-      margin-bottom: 6px;
+      margin: 8px 0 4px 2px;
+      letter-spacing: 0.5px;
     }
 
-    .field-grid {
+    /* Fast Selection Grids */
+    .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 5px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
     }
 
-    .btn-field {
+    button.tile {
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 12px 8px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 8px 4px;
+      border-radius: 5px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
-      touch-action: manipulation;
+      transition: background 0.1s, border-color 0.1s;
     }
-
-    .btn-field.active {
-      border-color: var(--accent);
+    button.tile.active {
+      border-color: var(--blue);
       background: #1f2937;
       color: var(--text-bright);
-      box-shadow: 0 0 0 1px var(--accent);
+      box-shadow: 0 0 0 1px var(--blue);
     }
 
-    .zone-row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
+    /* Zone Tiles */
+    button.zone-tile.active[data-val="SENTINEL"] { border-color: var(--green); color: var(--green); background: #0c2d15; box-shadow: 0 0 0 1px var(--green); }
+    button.zone-tile.active[data-val="OPEN"]     { border-color: var(--gold); color: var(--gold); background: #2f220d; box-shadow: 0 0 0 1px var(--gold); }
+    button.zone-tile.active[data-val="DEAD"]     { border-color: var(--red); color: var(--red); background: #331316; box-shadow: 0 0 0 1px var(--red); }
+    button.zone-tile.active[data-val="RIFT"]     { border-color: var(--purple); color: var(--purple); background: #28143d; box-shadow: 0 0 0 1px var(--purple); }
 
-    .btn-zone {
-      flex: 1;
-      padding: 10px 4px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
+    /* Compact Quick Input Rows */
+    .input-card {
       background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .control-row label {
       font-size: 11px;
+      font-weight: 600;
+      color: #8b949e;
+      min-width: 80px;
+    }
+    .control-row input, .control-row select {
+      flex: 1;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-bright);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 8px;
+      outline: none;
+    }
+
+    /* Quick Preset Buttons */
+    .quick-bar {
+      display: flex;
+      gap: 4px;
+    }
+    .quick-btn {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      color: #8b949e;
+      border-radius: 3px;
+      padding: 4px 6px;
+      font-size: 10px;
       font-weight: 700;
       cursor: pointer;
-      text-align: center;
-      text-transform: uppercase;
-      color: var(--text);
-      touch-action: manipulation;
     }
-
-    .btn-zone.zone-sentinel.active { border-color: var(--green); color: var(--green); background: #0e2716; }
-    .btn-zone.zone-open.active     { border-color: var(--orange); color: var(--orange); background: #2c1a0e; }
-    .btn-zone.zone-dead.active     { border-color: var(--red); color: var(--red); background: #2f1214; }
-    .btn-zone.zone-rift.active     { border-color: var(--purple); color: var(--purple); background: #241438; }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .input-box {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px 10px;
-    }
-
-    .input-box label {
-      display: block;
-      font-size: 10px;
-      color: #8b949e;
-      margin-bottom: 4px;
-    }
-
-    .input-box input, .input-box select {
-      width: 100%;
-      background: transparent;
-      border: none;
+    .quick-btn:active {
+      background: var(--border);
       color: var(--text-bright);
-      font-size: 16px;
-      font-weight: 600;
-      outline: none;
-      font-family: inherit;
     }
 
-    .results-card {
+    /* Output Card Matching Extension */
+    .output-card {
+      margin-top: 10px;
       background: #010409;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 14px;
-    }
-
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      font-size: 12px;
-    }
-
-    .ship-output-box {
-      margin-top: 10px;
-      padding: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
       border-radius: 6px;
+      padding: 10px;
     }
+    .badge-zone {
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .zone-SENTINEL { background: #238636; color: #fff; }
+    .zone-OPEN     { background: #d29922; color: #000; }
+    .zone-DEAD     { background: #da3633; color: #fff; }
+    .zone-RIFT     { background: #8957e5; color: #fff; }
 
-    .miner-total {
-      font-size: 16px;
-      font-weight: 700;
+    .fleet-summary {
+      margin-top: 8px;
+      padding: 8px;
+      background: #161b22;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+    }
+    .miner-line {
       color: var(--green);
-      margin-bottom: 4px;
+      font-size: 15px;
+      font-weight: 800;
     }
-
-    .escort-total {
-      font-size: 14px;
-      font-weight: 700;
+    .excavator-line {
+      color: var(--gold);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+    .escort-line {
       color: var(--orange);
-    }
-
-    .dwell-badge {
-      margin-top: 10px;
-      padding: 6px 8px;
-      background: #0b132b;
-      border: 1px solid #1c2541;
-      border-radius: 4px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .settings-panel {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      display: none;
-    }
-
-    .settings-panel.open {
-      display: block !important;
-    }
-
-    .cfg-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 12px;
-    }
-
-    .cfg-row input, .cfg-row select {
-      width: 120px;
-      background: #21262d;
-      border: 1px solid var(--border);
-      color: var(--text-bright);
-      padding: 5px 8px;
-      border-radius: 4px;
       font-size: 13px;
+      font-weight: 700;
+      margin-top: 4px;
     }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>Nexus Fleet Radar</h1>
-    <button id="toggleCfg" type="button" class="btn-toggle-cfg" onclick="toggleSettings()">⚙ Settings</button>
-  </header>
-
-  <div class="section-title">Field Type</div>
-  <div class="field-grid" id="fieldGrid">
-    <button type="button" class="btn-field active" onclick="setField('ORE BELT', this)">Ore Belt (50k)</button>
-    <button type="button" class="btn-field" onclick="setField('GAS CLOUD', this)">Gas Cloud (30k)</button>
-    <button type="button" class="btn-field" onclick="setField('ICE FIELD', this)">Ice Field (8k)</button>
-    <button type="button" class="btn-field" onclick="setField('PLASMA NEBULA', this)">Plasma Nebula (8k)</button>
-    <button type="button" class="btn-field" onclick="setField('QUANTUM CLUSTER', this)">Quantum Cluster (5k)</button>
-    <button type="button" class="btn-field" onclick="setField('DARK MATTER RIFT', this)">Dark Matter (2.5k)</button>
-  </div>
-
-  <div class="section-title">Security Zone</div>
-  <div class="zone-row" id="zoneGrid">
-    <button type="button" class="btn-zone zone-sentinel" onclick="setZone('SENTINEL', this)">Sentinel</button>
-    <button type="button" class="btn-zone zone-open active" onclick="setZone('OPEN', this)">Open</button>
-    <button type="button" class="btn-zone zone-dead" onclick="setZone('DEAD', this)">Dead</button>
-    <button type="button" class="btn-zone zone-rift" onclick="setZone('RIFT', this)">Rift</button>
-  </div>
-
-  <div class="input-grid">
-    <div class="input-box">
-      <label for="inRichness">Richness (Mult)</label>
-      <input type="number" id="inRichness" value="1.0" step="0.01" inputmode="decimal">
-    </div>
-    <div class="input-box">
-      <label for="inLeftPct">Remaining %</label>
-      <input type="number" id="inLeftPct" value="100" min="1" max="100" inputmode="numeric">
-    </div>
-  </div>
-
-  <div class="input-box" style="margin-bottom: 12px;">
-    <label for="selEscortShip">Escort Class</label>
-    <select id="selEscortShip">
-      <option value="Cruiser">Cruiser (1.0x)</option>
-      <option value="Interceptor">Interceptor (3.0x)</option>
-      <option value="Fighter">Fighter (5.0x)</option>
-      <option value="Corvette">Corvette (2.0x)</
+    .dwell-line {
+      margin-top: 8px;
+      padding: 5px 8px;
+      background: #0b132b;
+      border: 1px solid #1c254
