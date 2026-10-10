@@ -6,9 +6,11 @@
   <meta name="theme-color" content="#0d1117">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Nexus Mining Radar</title>
+
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
+
   <style>
     :root {
       --bg: #0d1117;
@@ -43,7 +45,6 @@
       min-height: 100vh;
     }
 
-    /* Header Bar */
     .app-header {
       display: flex;
       justify-content: space-between;
@@ -71,7 +72,6 @@
       line-height: 1;
     }
 
-    /* Section Headers */
     .label-tag {
       font-size: 10px;
       font-weight: 700;
@@ -81,7 +81,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Fast Selection Grids */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -112,13 +111,11 @@
       box-shadow: 0 0 0 1px var(--blue);
     }
 
-    /* Zone Tiles */
     button.zone-tile.active[data-val="SENTINEL"] { border-color: var(--green); color: var(--green); background: #0c2d15; box-shadow: 0 0 0 1px var(--green); }
     button.zone-tile.active[data-val="OPEN"]     { border-color: var(--gold); color: var(--gold); background: #2f220d; box-shadow: 0 0 0 1px var(--gold); }
     button.zone-tile.active[data-val="DEAD"]     { border-color: var(--red); color: var(--red); background: #331316; box-shadow: 0 0 0 1px var(--red); }
     button.zone-tile.active[data-val="RIFT"]     { border-color: var(--purple); color: var(--purple); background: #28143d; box-shadow: 0 0 0 1px var(--purple); }
 
-    /* Compact Quick Input Rows */
     .input-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -153,7 +150,6 @@
       outline: none;
     }
 
-    /* Quick Preset Buttons */
     .quick-bar {
       display: flex;
       gap: 4px;
@@ -173,51 +169,6 @@
       color: var(--text-bright);
     }
 
-    /* Output Card Matching Extension */
     .output-card {
       margin-top: 10px;
-      background: #010409;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px;
-    }
-    .badge-zone {
-      padding: 1px 6px;
-      border-radius: 3px;
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-    .zone-SENTINEL { background: #238636; color: #fff; }
-    .zone-OPEN     { background: #d29922; color: #000; }
-    .zone-DEAD     { background: #da3633; color: #fff; }
-    .zone-RIFT     { background: #8957e5; color: #fff; }
-
-    .fleet-summary {
-      margin-top: 8px;
-      padding: 8px;
-      background: #161b22;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-    }
-    .miner-line {
-      color: var(--green);
-      font-size: 15px;
-      font-weight: 800;
-    }
-    .excavator-line {
-      color: var(--gold);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-    .escort-line {
-      color: var(--orange);
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 4px;
-    }
-    .dwell-line {
-      margin-top: 8px;
-      padding: 5px 8px;
-      background: #0b132b;
-      border: 1px solid #1c254
+      background: #01040
