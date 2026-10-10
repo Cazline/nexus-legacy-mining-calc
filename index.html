@@ -3,30 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#0d1117">
-  <meta name="mobile-web-app-capable" content="yes">
   <title>Nexus Mining Radar</title>
-
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" href="icon.png">
-  <link rel="apple-touch-icon" href="icon.png">
-
   <style>
-    :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --input-bg: #21262d;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --text-bright: #f0f6fc;
-      --blue: #58a6ff;
-      --green: #3fb950;
-      --orange: #f0883e;
-      --gold: #d29922;
-      --red: #f85149;
-      --purple: #bc8cff;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -36,10 +14,10 @@
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: #0d1117;
+      color: #c9d1d9;
       font-size: 13px;
-      padding: 10px;
+      padding: 12px;
       max-width: 440px;
       margin: 0 auto;
       min-height: 100vh;
@@ -50,26 +28,26 @@
       justify-content: space-between;
       align-items: center;
       padding: 8px 12px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: #161b22;
+      border: 1px solid #30363d;
       border-radius: 6px;
       margin-bottom: 10px;
     }
+
     .app-header h1 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
-      color: var(--blue);
-      letter-spacing: 0.3px;
+      color: #58a6ff;
     }
+
     .btn-gear {
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
+      border: 1px solid #30363d;
+      color: #c9d1d9;
       padding: 4px 8px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 14px;
-      line-height: 1;
+      font-size: 13px;
     }
 
     .label-tag {
@@ -84,8 +62,9 @@
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
+      gap: 6px;
     }
+
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -93,57 +72,60 @@
     }
 
     button.tile {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 4px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 9px 4px;
       border-radius: 5px;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
-      transition: background 0.1s, border-color 0.1s;
-    }
-    button.tile.active {
-      border-color: var(--blue);
-      background: #1f2937;
-      color: var(--text-bright);
-      box-shadow: 0 0 0 1px var(--blue);
     }
 
-    button.zone-tile.active[data-val="SENTINEL"] { border-color: var(--green); color: var(--green); background: #0c2d15; box-shadow: 0 0 0 1px var(--green); }
-    button.zone-tile.active[data-val="OPEN"]     { border-color: var(--gold); color: var(--gold); background: #2f220d; box-shadow: 0 0 0 1px var(--gold); }
-    button.zone-tile.active[data-val="DEAD"]     { border-color: var(--red); color: var(--red); background: #331316; box-shadow: 0 0 0 1px var(--red); }
-    button.zone-tile.active[data-val="RIFT"]     { border-color: var(--purple); color: var(--purple); background: #28143d; box-shadow: 0 0 0 1px var(--purple); }
+    button.tile.active {
+      border-color: #58a6ff;
+      background: #1f2937;
+      color: #f0f6fc;
+      box-shadow: 0 0 0 1px #58a6ff;
+    }
+
+    button.zone-tile.active[data-val="SENTINEL"] { border-color: #3fb950; color: #3fb950; background: #0c2d15; box-shadow: 0 0 0 1px #3fb950; }
+    button.zone-tile.active[data-val="OPEN"]     { border-color: #d29922; color: #d29922; background: #2f220d; box-shadow: 0 0 0 1px #d29922; }
+    button.zone-tile.active[data-val="DEAD"]     { border-color: #f85149; color: #f85149; background: #331316; box-shadow: 0 0 0 1px #f85149; }
+    button.zone-tile.active[data-val="RIFT"]     { border-color: #bc8cff; color: #bc8cff; background: #28143d; box-shadow: 0 0 0 1px #bc8cff; }
 
     .input-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: #161b22;
+      border: 1px solid #30363d;
       border-radius: 6px;
-      padding: 8px;
+      padding: 8px 10px;
       margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
+
     .control-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
+
     .control-row label {
       font-size: 11px;
       font-weight: 600;
       color: #8b949e;
       min-width: 80px;
     }
+
     .control-row input, .control-row select {
       flex: 1;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
+      background: #21262d;
+      border: 1px solid #30363d;
       border-radius: 4px;
-      color: var(--text-bright);
+      color: #f0f6fc;
       font-size: 13px;
       font-weight: 600;
       padding: 5px 8px;
@@ -154,9 +136,10 @@
       display: flex;
       gap: 4px;
     }
+
     .quick-btn {
-      background: var(--input-bg);
-      border: 1px solid var(--border);
+      background: #21262d;
+      border: 1px solid #30363d;
       color: #8b949e;
       border-radius: 3px;
       padding: 4px 6px;
@@ -164,11 +147,412 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .quick-btn:active {
-      background: var(--border);
-      color: var(--text-bright);
-    }
 
     .output-card {
       margin-top: 10px;
-      background: #01040
+      background: #010409;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .badge-zone {
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .zone-SENTINEL { background: #238636; color: #fff; }
+    .zone-OPEN     { background: #d29922; color: #000; }
+    .zone-DEAD     { background: #da3633; color: #fff; }
+    .zone-RIFT     { background: #8957e5; color: #fff; }
+
+    .fleet-summary {
+      margin-top: 8px;
+      padding: 8px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 5px;
+    }
+
+    .miner-line {
+      color: #3fb950;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .excavator-line {
+      color: #d29922;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .escort-line {
+      color: #f0883e;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .dwell-line {
+      margin-top: 8px;
+      padding: 5px 8px;
+      background: #0b132b;
+      border: 1px solid #1c2541;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .settings-modal {
+      display: none;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .settings-modal.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-header">
+    <h1>Nexus Fleet Radar</h1>
+    <button type="button" class="btn-gear" id="btnToggleSettings">⚙ Settings</button>
+  </div>
+
+  <div class="label-tag">Target Field Type</div>
+  <div class="grid-2" id="fieldSelector">
+    <button type="button" class="tile active" data-val="ORE BELT">Ore Belt (50k)</button>
+    <button type="button" class="tile" data-val="GAS CLOUD">Gas Cloud (30k)</button>
+    <button type="button" class="tile" data-val="ICE FIELD">Ice Field (8k)</button>
+    <button type="button" class="tile" data-val="PLASMA NEBULA">Plasma Nebula (8k)</button>
+    <button type="button" class="tile" data-val="QUANTUM CLUSTER">Quantum Cluster (5k)</button>
+    <button type="button" class="tile" data-val="DARK MATTER RIFT">Dark Matter (2.5k)</button>
+  </div>
+
+  <div class="label-tag">Galaxy Security Zone</div>
+  <div class="grid-4" id="zoneSelector">
+    <button type="button" class="tile zone-tile" data-val="SENTINEL">Sentinel</button>
+    <button type="button" class="tile zone-tile active" data-val="OPEN">Open</button>
+    <button type="button" class="tile zone-tile" data-val="DEAD">Dead</button>
+    <button type="button" class="tile zone-tile" data-val="RIFT">Rift</button>
+  </div>
+
+  <div class="input-card">
+    <div class="control-row">
+      <label for="inputRichness">Richness:</label>
+      <input type="number" id="inputRichness" value="1.00" step="0.05" inputmode="decimal">
+      <div class="quick-bar">
+        <button type="button" class="quick-btn" id="btnRichMinus">-0.1</button>
+        <button type="button" class="quick-btn" id="btnRichPlus">+0.1</button>
+      </div>
+    </div>
+
+    <div class="control-row">
+      <label for="inputLeftPct">Remaining %:</label>
+      <input type="number" id="inputLeftPct" value="100" min="1" max="100" inputmode="numeric">
+      <div class="quick-bar">
+        <button type="button" class="quick-btn" id="btnPct100">100%</button>
+        <button type="button" class="quick-btn" id="btnPct50">50%</button>
+        <button type="button" class="quick-btn" id="btnPct25">25%</button>
+      </div>
+    </div>
+
+    <div class="control-row">
+      <label for="selectEscortShip">Escort Class:</label>
+      <select id="selectEscortShip">
+        <option value="Cruiser">Cruiser (1.0x)</option>
+        <option value="Interceptor">Interceptor (3.0x)</option>
+        <option value="Fighter">Fighter (5.0x)</option>
+        <option value="Corvette">Corvette (2.0x)</option>
+        <option value="Frigate">Frigate (1.5x)</option>
+        <option value="Destroyer">Destroyer (0.75x)</option>
+        <option value="Battleship">Battleship (0.35x)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="output-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+      <span style="color:#58a6ff; font-weight:700;" id="outFieldName">Ore Belt</span>
+      <span class="badge-zone zone-OPEN" id="outZoneBadge">OPEN</span>
+    </div>
+    <div><strong>Resources:</strong> <span id="outResources">50,000</span> units</div>
+    <div><strong>Hold / Ship:</strong> <span id="outHold">792</span> (<span id="outTechLabel">Lv4 Tech</span>)</div>
+
+    <div class="fleet-summary">
+      <div class="miner-line" id="outMiners">64× Mining Vessel</div>
+      <div class="excavator-line" id="outExcavator" style="display:none;">+ 1× Excavator (+20% Fleet Yield)</div>
+      <div class="escort-line" id="outEscort">Escort: 42× Cruiser (0.65× per miner)</div>
+    </div>
+
+    <div class="dwell-line">
+      ⏱ <strong>Dwell Time:</strong> <span id="outDwell">20 cycles (~60 mins)</span>
+    </div>
+  </div>
+
+  <div class="settings-modal" id="settingsModal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <strong style="color:#f0f6fc;">⚙ Engine Settings & Ratios</strong>
+      <button type="button" class="btn-gear" id="btnCloseSettings">✕</button>
+    </div>
+
+    <div class="control-row" style="margin-bottom:6px;">
+      <label for="cfgCargoTech">Cargo Tech:</label>
+      <select id="cfgCargoTech">
+        <option value="1">Level 1 (+8%)</option>
+        <option value="2">Level 2 (+16%)</option>
+        <option value="3">Level 3 (+24%)</option>
+        <option value="4" selected>Level 4 (+32%)</option>
+        <option value="5">Level 5 (+40%)</option>
+      </select>
+    </div>
+
+    <div class="control-row" style="margin-bottom:6px;">
+      <label for="cfgYieldBonus">Yield Bonus (+%):</label>
+      <input type="number" id="cfgYieldBonus" value="25" step="1">
+    </div>
+
+    <div class="control-row" style="margin-bottom:8px;">
+      <label for="cfgExcavator">Send Excavator:</label>
+      <input type="checkbox" id="cfgExcavator" style="width:auto;">
+    </div>
+
+    <div class="label-tag">Escort Ratio per Miner (Cruiser Baseline)</div>
+    <div class="control-row" style="margin-bottom:4px;">
+      <label for="cfgRatioSentinel" style="color:#3fb950;">Sentinel:</label>
+      <input type="number" id="cfgRatioSentinel" value="0.10" step="0.05">
+    </div>
+    <div class="control-row" style="margin-bottom:4px;">
+      <label for="cfgRatioOpen" style="color:#d29922;">Open:</label>
+      <input type="number" id="cfgRatioOpen" value="0.65" step="0.05">
+    </div>
+    <div class="control-row" style="margin-bottom:4px;">
+      <label for="cfgRatioDead" style="color:#f85149;">Dead:</label>
+      <input type="number" id="cfgRatioDead" value="2.00" step="0.10">
+    </div>
+    <div class="control-row" style="margin-bottom:4px;">
+      <label for="cfgRatioRift" style="color:#bc8cff;">Rift:</label>
+      <input type="number" id="cfgRatioRift" value="3.00" step="0.10">
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'nexus_standalone_pwa_v4';
+
+    const BASE_SHIPS = {
+      mining_vessel: { name: 'Mining Vessel', baseHold: 300, rates: { 'ORE BELT': 40, 'PLASMA NEBULA': 15 } },
+      gas_collector: { name: 'Gas Collector', baseHold: 400, rates: { 'GAS CLOUD': 15, 'QUANTUM CLUSTER': 3 } },
+      ice_drill:     { name: 'Ice Drill',     baseHold: 300, rates: { 'ICE FIELD': 20, 'DARK MATTER RIFT': 3 } },
+      excavator:     { name: 'Excavator',     baseHold: 500, rates: { 'ORE BELT': 40, 'ICE FIELD': 8, 'GAS CLOUD': 13, 'PLASMA NEBULA': 24 } }
+    };
+
+    const ESCORT_EQUIV = {
+      'Cruiser':      1.0,
+      'Interceptor':  3.0,
+      'Fighter':      5.0,
+      'Corvette':     2.0,
+      'Frigate':      1.5,
+      'Destroyer':    0.75,
+      'Battleship':   0.35
+    };
+
+    const FIELD_RULES = {
+      'ORE BELT':         { shipKey: 'mining_vessel', basePool: 50000, label: 'Ore Belt' },
+      'GAS CLOUD':        { shipKey: 'gas_collector', basePool: 30000, label: 'Gas Cloud' },
+      'ICE FIELD':        { shipKey: 'ice_drill',     basePool: 8000,  label: 'Ice Field' },
+      'PLASMA NEBULA':    { shipKey: 'mining_vessel', basePool: 8000,  label: 'Plasma Nebula' },
+      'QUANTUM CLUSTER':  { shipKey: 'gas_collector', basePool: 5000,  label: 'Quantum Cluster' },
+      'DARK MATTER RIFT': { shipKey: 'ice_drill',     basePool: 2500,  label: 'Dark Matter Rift' }
+    };
+
+    const appState = {
+      field: 'ORE BELT',
+      zone: 'OPEN',
+      richness: 1.0,
+      leftPct: 100,
+      escortShip: 'Cruiser',
+      cargoLevel: 4,
+      yieldBonus: 25,
+      hasExcavator: false,
+      zoneRatios: {
+        SENTINEL: 0.10,
+        OPEN: 0.65,
+        DEAD: 2.00,
+        RIFT: 3.00
+      }
+    };
+
+    function loadSavedSettings() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          Object.assign(appState, parsed);
+          if (parsed.zoneRatios) Object.assign(appState.zoneRatios, parsed.zoneRatios);
+        }
+      } catch (e) {}
+
+      document.getElementById('cfgCargoTech').value = appState.cargoLevel;
+      document.getElementById('cfgYieldBonus').value = appState.yieldBonus;
+      document.getElementById('cfgExcavator').checked = appState.hasExcavator;
+      document.getElementById('cfgRatioSentinel').value = appState.zoneRatios.SENTINEL;
+      document.getElementById('cfgRatioOpen').value = appState.zoneRatios.OPEN;
+      document.getElementById('cfgRatioDead').value = appState.zoneRatios.DEAD;
+      document.getElementById('cfgRatioRift').value = appState.zoneRatios.RIFT;
+      document.getElementById('selectEscortShip').value = appState.escortShip;
+    }
+
+    function persistSettings() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {}
+    }
+
+    function calculate() {
+      const fieldDef = FIELD_RULES[appState.field];
+      const shipDef = BASE_SHIPS[fieldDef.shipKey];
+
+      const techMultiplier = 1 + (appState.cargoLevel * 0.08);
+      const serverMultiplier = 2.0;
+      const holdPerShip = Math.floor(shipDef.baseHold * serverMultiplier * techMultiplier);
+
+      const totalResources = Math.round(fieldDef.basePool * appState.richness * (appState.leftPct / 100));
+
+      let minersNeeded = 0;
+      if (appState.hasExcavator) {
+        const excHold = Math.floor(BASE_SHIPS.excavator.baseHold * serverMultiplier * techMultiplier);
+        const remVolume = Math.max(0, totalResources - excHold);
+        minersNeeded = Math.ceil(remVolume / holdPerShip);
+      } else {
+        minersNeeded = Math.ceil(totalResources / holdPerShip);
+      }
+
+      const baseRatio = appState.zoneRatios[appState.zone] ?? 0.65;
+      const classMultiplier = ESCORT_EQUIV[appState.escortShip] ?? 1.0;
+      const effectiveRatio = baseRatio * classMultiplier;
+      const escortsNeeded = Math.ceil(minersNeeded * effectiveRatio);
+
+      const shipExtract = shipDef.rates[appState.field] || 15;
+      const excExtract = appState.hasExcavator ? (BASE_SHIPS.excavator.rates[appState.field] || 0) : 0;
+      const yieldMultiplier = (1 + (appState.yieldBonus / 100)) * (appState.hasExcavator ? 1.20 : 1.0);
+      const totalExtraction = Math.floor(((minersNeeded * shipExtract) + excExtract) * appState.richness * yieldMultiplier);
+
+      const cycles = totalExtraction > 0 ? Math.ceil(totalResources / totalExtraction) : 0;
+      const mins = cycles * 3;
+
+      document.getElementById('outFieldName').textContent = fieldDef.label;
+      const badge = document.getElementById('outZoneBadge');
+      badge.textContent = appState.zone;
+      badge.className = 'badge-zone zone-' + appState.zone;
+
+      document.getElementById('outResources').textContent = totalResources.toLocaleString();
+      document.getElementById('outHold').textContent = holdPerShip.toLocaleString();
+      document.getElementById('outTechLabel').textContent = 'Lv' + appState.cargoLevel + ' Tech';
+
+      document.getElementById('outMiners').textContent = minersNeeded + '× ' + shipDef.name;
+      document.getElementById('outExcavator').style.display = appState.hasExcavator ? 'block' : 'none';
+      document.getElementById('outEscort').textContent = 'Escort: ' + escortsNeeded + '× ' + appState.escortShip + ' (' + effectiveRatio.toFixed(2) + '× per miner)';
+      document.getElementById('outDwell').textContent = cycles + ' cycles (~' + mins + ' mins)';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedSettings();
+
+      document.getElementById('fieldSelector').addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        document.querySelectorAll('#fieldSelector button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        appState.field = btn.getAttribute('data-val');
+        calculate();
+      });
+
+      document.getElementById('zoneSelector').addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        document.querySelectorAll('#zoneSelector button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        appState.zone = btn.getAttribute('data-val');
+        calculate();
+      });
+
+      const inRichness = document.getElementById('inputRichness');
+      const inLeftPct = document.getElementById('inputLeftPct');
+
+      inRichness.addEventListener('input', () => {
+        appState.richness = Math.max(0.01, parseFloat(inRichness.value) || 1.0);
+        calculate();
+      });
+
+      inLeftPct.addEventListener('input', () => {
+        appState.leftPct = Math.max(1, Math.min(100, parseFloat(inLeftPct.value) || 100));
+        calculate();
+      });
+
+      document.getElementById('btnRichMinus').addEventListener('click', () => {
+        appState.richness = Math.max(0.1, +(appState.richness - 0.1).toFixed(2));
+        inRichness.value = appState.richness;
+        calculate();
+      });
+      document.getElementById('btnRichPlus').addEventListener('click', () => {
+        appState.richness = +(appState.richness + 0.1).toFixed(2);
+        inRichness.value = appState.richness;
+        calculate();
+      });
+
+      document.getElementById('btnPct100').addEventListener('click', () => { appState.leftPct = 100; inLeftPct.value = 100; calculate(); });
+      document.getElementById('btnPct50').addEventListener('click', () => { appState.leftPct = 50; inLeftPct.value = 50; calculate(); });
+      document.getElementById('btnPct25').addEventListener('click', () => { appState.leftPct = 25; inLeftPct.value = 25; calculate(); });
+
+      document.getElementById('selectEscortShip').addEventListener('change', (e) => {
+        appState.escortShip = e.target.value;
+        persistSettings();
+        calculate();
+      });
+
+      const settingsModal = document.getElementById('settingsModal');
+      document.getElementById('btnToggleSettings').addEventListener('click', () => {
+        settingsModal.classList.toggle('active');
+      });
+      document.getElementById('btnCloseSettings').addEventListener('click', () => {
+        settingsModal.classList.remove('active');
+      });
+
+      document.getElementById('cfgCargoTech').addEventListener('change', (e) => {
+        appState.cargoLevel = parseInt(e.target.value, 10);
+        persistSettings();
+        calculate();
+      });
+
+      document.getElementById('cfgYieldBonus').addEventListener('input', (e) => {
+        appState.yieldBonus = parseFloat(e.target.value) || 0;
+        persistSettings();
+        calculate();
+      });
+
+      document.getElementById('cfgExcavator').addEventListener('change', (e) => {
+        appState.hasExcavator = e.target.checked;
+        persistSettings();
+        calculate();
+      });
+
+      ['Sentinel', 'Open', 'Dead', 'Rift'].forEach(z => {
+        document.getElementById('cfgRatio' + z).addEventListener('input', (e) => {
+          appState.zoneRatios[z.toUpperCase()] = parseFloat(e.target.value) || 0;
+          persistSettings();
+          calculate();
+        });
+      });
+
+      calculate();
+    });
+  </script>
+</body>
+</html>
